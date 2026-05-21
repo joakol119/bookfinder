@@ -1,0 +1,280 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap");
+
+:root {
+  --bf-accent: #c45d3e;
+  --bf-accent-hover: #a84e33;
+  --bf-accent-light: #fdf0ec;
+  --bf-bg: #faf7f2;
+  --bf-text: #2c1810;
+  --bf-text-muted: #6b5445;
+}
+
+body {
+  background-color: var(--bf-bg) !important;
+  font-family: "Source Sans 3", -apple-system, sans-serif;
+  color: var(--bf-text);
+  min-height: 100vh;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-wrapper > main {
+  flex: 1;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+/* ─── Navbar ─── */
+.navbar-brand-text {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.navbar-brand-text span {
+  color: var(--bf-accent);
+}
+
+/* ─── Search ─── */
+.search-hero {
+  text-align: center;
+  padding: 2.5rem 0 2rem;
+}
+
+.search-hero h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.search-hero p {
+  color: var(--bf-text-muted);
+  font-size: 1.05rem;
+}
+
+/* ─── Book Cards ─── */
+.book-card {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
+  overflow: hidden;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(44, 24, 16, 0.1);
+}
+
+.book-cover-wrapper {
+  width: 100%;
+  height: 260px;
+  background: #f0ebe3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.book-cover-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bookmark-btn-float {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 4px 8px !important;
+  color: var(--bf-accent) !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.bookmark-btn-float:hover {
+  transform: scale(1.15);
+}
+
+/* ─── Accent buttons ─── */
+.btn-accent {
+  background-color: var(--bf-accent);
+  border-color: var(--bf-accent);
+  color: #fff;
+}
+
+.btn-accent:hover {
+  background-color: var(--bf-accent-hover);
+  border-color: var(--bf-accent-hover);
+  color: #fff;
+}
+
+.btn-outline-accent {
+  border-color: var(--bf-accent);
+  color: var(--bf-accent);
+}
+
+.btn-outline-accent:hover {
+  background-color: var(--bf-accent);
+  color: #fff;
+}
+
+/* ─── Filter chips ─── */
+.filter-chip {
+  border-radius: 20px !important;
+  font-size: 0.85rem;
+  padding: 0.3rem 1rem;
+}
+
+.filter-chip.active {
+  background-color: var(--bf-accent) !important;
+  border-color: var(--bf-accent) !important;
+  color: #fff !important;
+}
+
+/* ─── Detail page ─── */
+.detail-cover-img {
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(44, 24, 16, 0.12);
+}
+
+.subject-badge {
+  background-color: var(--bf-accent-light);
+  color: var(--bf-accent);
+  border-radius: 14px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.82rem;
+  display: inline-block;
+}
+
+/* ─── Reading list ─── */
+.reading-item {
+  transition: box-shadow 0.2s;
+}
+
+.reading-item:hover {
+  box-shadow: 0 4px 12px rgba(44, 24, 16, 0.08);
+}
+
+.reading-item-cover {
+  width: 60px;
+  height: 85px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f0ebe3;
+}
+
+.reading-item-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ─── Animations ─── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.35s ease-out both;
+}
+
+/* ─── Pagination accent ─── */
+.page-link {
+  color: var(--bf-accent);
+}
+
+.page-item.active .page-link {
+  background-color: var(--bf-accent);
+  border-color: var(--bf-accent);
+}
+
+/* ─── Skip to content (accesibilidad) ─── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: var(--bf-accent);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  z-index: 9999;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ─── Reducir layout shift de imágenes ─── */
+.book-cover-wrapper img,
+.reading-item-cover img,
+.detail-cover-img {
+  content-visibility: auto;
+}
+
+/* ─── Focus visible para accesibilidad ─── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--bf-accent);
+  outline-offset: 2px;
+}
+
+/* ─── Skeleton loading ─── */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.skeleton-cover {
+  width: 100%;
+  height: 260px;
+  background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d6 37%, #f0ebe3 63%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.skeleton-line {
+  border-radius: 4px;
+  background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d6 37%, #f0ebe3 63%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.skeleton-title {
+  width: 85%;
+  height: 16px;
+  margin-bottom: 8px;
+}
+
+.skeleton-author {
+  width: 60%;
+  height: 12px;
+  margin-bottom: 6px;
+}
+
+.skeleton-year {
+  width: 30%;
+  height: 12px;
+}

@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  bookfinder:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "3000:80"
+    restart: unless-stopped
