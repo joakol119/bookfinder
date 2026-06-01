@@ -1,44 +1,51 @@
-# 00 - Memory Bank: BookFinder
+# 00 — Memory Bank: Libre RIA
 
-## Contexto del Proyecto
-- **Materia:** Rich Internet Applications (RIA) 2026
-- **Tarea:** Laboratorio 2 — Escenario #6: Buscador de Libros
-- **API principal:** Open Library API (https://openlibrary.org/developers/api)
-- **Stack:** React 18 + Vite + React-Bootstrap + React Router DOM 6
-- **Persistencia:** LocalStorage para lista de lecturas pendientes
+## Descripción del proyecto
 
-## Decisiones Técnicas
-1. **Framework:** React — ecosistema amplio, buena documentación, fácil integración con Bootstrap.
-2. **UI Library:** React-Bootstrap — implementación oficial de Bootstrap para React, componentes listos.
-3. **Routing:** React Router DOM v6 con `createBrowserRouter` — rutas anidadas bajo layout principal.
-4. **Estado:** useState local por componente + eventos custom para sincronizar navbar badge.
-5. **API Service:** Capa de servicios separada en `src/services/` para desacoplar lógica de fetch.
-6. **Docker:** Multi-stage build (Node para build → Nginx para serve) con SPA fallback.
+Aplicación web de búsqueda de libros desarrollada como Laboratorio 2 de la materia Rich Internet Applications (RIA) 2026. Consume la Open Library API y permite buscar libros, ver su detalle y guardar una lista de lecturas pendientes.
 
-## Arquitectura de Componentes
+## Stack tecnológico
+
+- **React 18 + Vite** — framework principal
+- **React-Bootstrap** — componentes de UI
+- **React Router DOM v6** — navegación entre vistas
+- **Vitest + React Testing Library** — testing
+- **Docker + Nginx** — despliegue local
+
+## Estructura del proyecto
+
 ```
-App (Layout + Navbar + Outlet)
-├── HomePage
-│   ├── SearchBar (input + filtros)
-│   ├── BookCard[] (grilla de resultados)
-│   └── PaginationBar
-├── BookDetailPage (info completa + agregar a lista)
-└── ReadingListPage (libros guardados en LocalStorage)
+bookfinder/
+├── src/
+│   ├── components/   # NavigationBar, SearchBar, BookCard, PaginationBar
+│   ├── views/        # HomePage, BookDetailPage, ReadingListPage
+│   ├── services/     # openLibraryApi.js, readingListService.js
+│   └── router/       # AppRouter.jsx
+├── tests/
+├── docker/
+├── prompts/
+├── README.md
+└── docker-compose.yml
 ```
 
-## Endpoints de API Utilizados
-- Búsqueda: `GET /search.json?q=|author=|isbn=|subject={term}&limit=12&offset=N`
-- Detalle de obra: `GET /works/{workId}.json`
-- Portadas: `https://covers.openlibrary.org/b/id/{coverId}-{S|M|L}.jpg`
+## API utilizada
 
-## Estado Actual
-- [x] Estructura del proyecto creada
-- [x] Componentes implementados
-- [x] Servicios de API y LocalStorage
-- [x] Rutas configuradas
-- [x] Docker configurado
-- [x] README completo
-- [ ] Tests unitarios e integración
-- [ ] Mockups en Figma/Excalidraw
-- [ ] Video demo de 30s
-- [ ] PPT de presentación
+**Open Library API** — pública, sin autenticación.
+
+- Búsqueda: `GET https://openlibrary.org/search.json?q={query}&fields=...`
+- Detalle de obra: `GET https://openlibrary.org/works/{id}.json`
+- Detalle de autor: `GET https://openlibrary.org/authors/{id}.json`
+- Portadas: `https://covers.openlibrary.org/b/id/{cover_id}-M.jpg`
+
+Se usa el parámetro `fields` para limitar los datos recibidos y mejorar el rendimiento.
+
+## Decisiones de diseño
+
+- Se eligió Open Library por ser gratuita y no requerir API key.
+- La persistencia de la lista de lectura se maneja con LocalStorage via `readingListService.js`.
+- El caché en memoria evita repetir llamadas para la misma búsqueda dentro de la misma sesión.
+- El filtro de búsqueda "Título" fue renombrado a "General" porque la API no distingue búsqueda exacta por título.
+
+## Herramienta de IA utilizada
+
+**Claude (Anthropic)** — asistencia en el desarrollo de componentes, servicios, configuración de tests y mejoras de accesibilidad. Los prompts relevantes están registrados en esta carpeta.
