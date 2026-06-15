@@ -1,152 +1,194 @@
-# 📖 BookFinder — Buscador de Libros
+# 📚 LibreRIA — Buscador de Libros
 
-Aplicación RIA para buscar libros utilizando la [Open Library API](https://openlibrary.org/developers/api). Permite buscar por título, autor, ISBN o tema, ver detalles de cada libro y gestionar una lista de lecturas pendientes.
+Aplicación RIA para buscar libros usando la [Open Library API](https://openlibrary.org/developers/api). Permite buscar por título, autor, ISBN o tema, navegar resultados paginados, revisar el detalle de cada obra y guardar una lista de lectura persistida en `localStorage`.
 
 **Curso:** Rich Internet Applications (RIA) 2026  
 **Tarea:** Laboratorio 2 — Escenario #6: Buscador de Libros  
-**Integrantes:** [Nombre 1], [Nombre 2]
+**Repositorio:** https://github.com/joakol119/bookfinder  
+**Integrantes:** Joaquín Poblete y Roibeth García
 
 ---
 
-## 🛠️ Tecnologías
+## Objetivo
 
-| Categoría       | Tecnología                            |
-|-----------------|---------------------------------------|
-| Framework       | React 18 + Vite                       |
-| UI              | React-Bootstrap 2 + Bootstrap 5       |
-| Routing         | React Router DOM 6                    |
-| API             | Open Library API                      |
-| Persistencia    | LocalStorage                          |
-| Testing         | Vitest + React Testing Library        |
-| Deploy          | Docker + Nginx                        |
+Construir una Single Page Application orientada a búsqueda de libros, con foco en:
 
-## 📁 Estructura del Proyecto
+- separación entre UI, routing y servicios
+- consumo eficiente de API pública
+- persistencia local para la lista de lectura
+- experiencia responsive para desktop y mobile
+- cobertura de pruebas sobre piezas críticas
 
-```
+---
+
+## Tecnologías
+
+| Categoría | Tecnología |
+| --- | --- |
+| Framework | React 19 + Vite |
+| UI | React-Bootstrap 2 + Bootstrap 5 |
+| Routing | React Router DOM 7 |
+| API | Open Library API |
+| Persistencia | LocalStorage |
+| Testing | Vitest + React Testing Library |
+| Deploy | Docker + Nginx |
+
+---
+
+## Decisiones técnicas destacadas
+
+- **Servicios separados de los componentes** para aislar la lógica de acceso a datos.
+- **Paginación de resultados** para evitar renderizados excesivos y mejorar navegación.
+- **Caché con TTL** para reducir llamadas repetidas a la API.
+- **Filtrado de campos del payload** para traer solo la información necesaria.
+- **Lista de lectura persistida** en `localStorage` para mantener estado entre sesiones.
+
+---
+
+## Estructura del proyecto
+
+```text
 bookfinder/
 ├── src/
 │   ├── components/        # Componentes reutilizables
-│   │   ├── NavigationBar.jsx
-│   │   ├── SearchBar.jsx
-│   │   ├── BookCard.jsx
-│   │   └── PaginationBar.jsx
-│   ├── views/             # Páginas principales
-│   │   ├── HomePage.jsx
-│   │   ├── BookDetailPage.jsx
-│   │   └── ReadingListPage.jsx
-│   ├── services/          # Llamadas a APIs y lógica de datos
-│   │   ├── openLibraryApi.js
-│   │   └── readingListService.js
 │   ├── router/            # Configuración de rutas
-│   │   └── index.jsx
-│   ├── App.jsx            # Layout principal
-│   ├── App.css            # Estilos custom
-│   └── main.jsx           # Entry point
+│   ├── services/          # API y lógica de datos
+│   ├── views/             # Páginas principales
+│   ├── App.jsx
+│   ├── App.css
+│   └── main.jsx
 ├── tests/                 # Pruebas unitarias e integración
-├── docker/                # Dockerfile y config de Nginx
-│   ├── Dockerfile
-│   └── nginx.conf
-├── prompts/               # Registro de prompts de IA
+├── docker/                # Dockerfile y configuración de Nginx
+├── prompts/               # Registro de uso de IA
+├── Capturas/              # Evidencia visual desktop, mobile y diagramas
 ├── docker-compose.yml
 └── README.md
 ```
 
-## 🚀 Cómo Levantar el Proyecto
+---
 
-### Opción 1: Desarrollo Local
+## Funcionalidades
 
-```bash
-# 1. Clonar el repositorio
-git clone https://github.com/tu-usuario/bookfinder.git
-cd bookfinder
+- búsqueda por título, autor, ISBN y tema
+- paginación de resultados
+- vista de detalle de cada libro
+- lista de lectura persistida en `localStorage`
+- interfaz responsive para mobile y desktop
 
-# 2. Instalar dependencias
-npm install
+---
 
-# 3. Iniciar servidor de desarrollo
-npm run dev
-```
+## Rutas
 
-La app estará disponible en `http://localhost:5173`
+| Ruta | Descripción |
+| --- | --- |
+| `/` | Página principal con buscador |
+| `/book/:workId` | Detalle de una obra |
+| `/reading-list` | Lista de lecturas pendientes |
 
-### Opción 2: Docker
+---
 
-```bash
-# Build y run con Docker Compose
-docker-compose up --build
-
-# La app estará en http://localhost:3000
-```
-
-### Opción 3: Build de Producción
-
-```bash
-npm run build
-npm run preview
-```
-
-## 📄 Rutas de la Aplicación
-
-| Ruta              | Descripción                               |
-|-------------------|-------------------------------------------|
-| `/`               | Página principal con buscador             |
-| `/book/:workId`   | Detalle de un libro específico            |
-| `/reading-list`   | Lista de lecturas pendientes (LocalStorage)|
-
-## 🔌 APIs Consumidas
-
-### Open Library API (Principal)
+## API consumida
 
 - **Búsqueda:** `GET https://openlibrary.org/search.json?q={query}`
 - **Detalle:** `GET https://openlibrary.org/works/{id}.json`
 - **Portadas:** `https://covers.openlibrary.org/b/id/{cover_id}-{size}.jpg`
 
-**Alternativas contempladas:**
-- Google Books API
-- ISBNdb
+---
 
-### Funcionalidades
+## Capturas de la aplicación
 
-- Búsqueda por título, autor, ISBN y tema
-- Paginación de resultados
-- Vista de detalle con descripción, temas, año, ediciones y rating
-- Lista de lecturas pendientes persistida en LocalStorage
-- Diseño responsive (mobile y desktop)
+### Home — búsqueda vacía
+![Home](Capturas/Desktop/1-original.png)
 
-## 🧪 Testing
+### Resultados de búsqueda
+![Resultados](Capturas/Desktop/2-original.png)
+
+### Detalle de libro
+![Detalle](Capturas/Desktop/3-original.png)
+
+### Lista de lecturas
+![Lista de lecturas](Capturas/Desktop/4-original.png)
+
+---
+
+## Lighthouse
+
+Puntajes obtenidos sobre la build de producción (`localhost:3000`):
+
+![Lighthouse](Capturas/Desktop/5-original.png)
+
+| Métrica | Puntaje |
+| --- | --- |
+| Performance | 99 |
+| Accessibility | 94 |
+| Best Practices | 100 |
+| SEO | 91 |
+
+---
+
+## Cómo levantar el proyecto
+
+### Desarrollo local
 
 ```bash
-# Ejecutar tests unitarios
-npm run test
+npm install
+npm run dev
+```
 
-# Ejecutar tests con coverage
+La aplicación queda disponible en `http://localhost:5173`.
+
+### Docker
+
+```bash
+docker-compose up --build
+```
+
+La aplicación queda disponible en `http://localhost:3000`.
+
+---
+
+## Testing
+
+```bash
+npm run test
 npm run test:coverage
 ```
 
-### Performance (Lighthouse)
+Archivos de prueba incluidos:
 
-> Completar con capturas de Lighthouse > 80 en Performance, Accessibility, Best Practices y SEO.
+- `tests/BookCard.test.jsx`
+- `tests/PaginationBar.test.jsx`
+- `tests/SearchBar.test.jsx`
+- `tests/openLibraryApi.test.js`
+- `tests/readingListService.test.js`
 
-## 🎥 Video Demo
+---
 
-> [Link al video de 30 segundos]
+## Uso de inteligencia artificial
 
-## 🤖 Uso de Inteligencia Artificial
+Se utilizó IA como herramienta de apoyo para estructuración inicial, generación asistida de componentes y apoyo en organización del desarrollo. Los prompts relevantes quedaron documentados en la carpeta `prompts/`.
 
-Se utilizaron las siguientes herramientas de IA durante el desarrollo:
+---
 
-- **Claude (Anthropic):** Generación de estructura del proyecto, componentes y servicios.
+## PPT y Demo
 
-Los prompts relevantes están guardados en la carpeta `prompts/`.
+En la PPT está incluida la demo.
 
-## 📋 Checklist de Entregables
+https://docs.google.com/presentation/d/1wqhThJ-E38OJNHN1ZrwGwi3AKtlaCZkf/edit?usp=sharing&ouid=100249998154306957505&rtpof=true&sd=true
 
-- [ ] Mockups (Figma/Excalidraw)
-- [x] Código en GitHub con README.md completo
-- [ ] Tests Unitarios e Integración (capturas de éxito)
-- [ ] Video de 30 segundos
-- [ ] PPT de presentación (mínimo 7 slides)
+---
 
-## 📝 Licencia
+## Checklist de entregables
+
+- [x] README sin placeholders y con información real del proyecto
+- [x] Código fuente versionado en GitHub
+- [x] Pruebas automatizadas incluidas en el repositorio
+- [x] Capturas y diagramas de apoyo incluidos en el repositorio
+- [x] Link del video demo incorporado en este README
+- [x] Link o referencia a la PPT incorporada en este README
+
+---
+
+## Licencia
 
 Proyecto académico — RIA 2026.
